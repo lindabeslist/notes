@@ -1,12 +1,15 @@
 import path from "path";
 import { Configuration } from "webpack";
 import CopyWebpackPlugin from "copy-webpack-plugin";
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+
 
 const config: Configuration = {
   mode:
     (process.env.NODE_ENV as "production" | "development" | undefined) ??
     "development",
-  entry: "./src/entrypoint.tsx",
+  entry: "./src/index.tsx",
   module: {
     rules: [
       {
@@ -15,8 +18,27 @@ const config: Configuration = {
         exclude: /node_modules/,
       },
       {
-        test: /\.css$/,
-        use: ["style-loader", "css-loader"],
+          test: /\.(scss|css)$/,
+          exclude: /node_modules/,
+          include: /\.module\.scss$/,
+          use: [
+              { loader: MiniCssExtractPlugin.loader },
+              {
+                  loader: 'css-loader',
+                  options: {
+                      modules: {
+                          localIdentName: 'browse-[local]-[hash:base64:5]',
+                      },
+                      importLoaders: 2,
+                  },
+              },
+              { loader: 'postcss-loader' }, {
+                  loader: 'sass-loader',
+                  options: {
+                      sourceMap: true,
+                  },
+              }
+          ],
       },
     ],
   },
@@ -28,9 +50,9 @@ const config: Configuration = {
     path: path.resolve(__dirname, "dist"),
   },
   plugins: [
-    new CopyWebpackPlugin({
-      patterns: [{ from: "public" }],
-    }),
+      new HtmlWebpackPlugin({
+          template: './public/index.html'
+      })
   ],
 };
 
