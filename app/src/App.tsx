@@ -1,9 +1,15 @@
-import Footer from "./components/Footer";
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import NotesContainer from './components/Notes.container';
 
 export default function App() {
-  return (
-    <main>
-      <p>App</p>
-    </main>
-  );
+    const client = new ApolloClient({
+        uri: 'http://localhost:4000/',
+        cache: new InMemoryCache()
+    });
+
+    return (
+        <ApolloProvider client={client}>
+            <NotesContainer />
+        </ApolloProvider>
+    );
 }
