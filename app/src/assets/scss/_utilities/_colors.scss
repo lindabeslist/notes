@@ -1,0 +1,40 @@
+/// Map of the corporate beslist.nl colors.
+/// @group global
+/// @prop {Map} primary - primary color
+/// @prop {Map} secondary - secondary color
+/// @prop {Map} accent - accent color
+/// @prop {Map} cta - call to action color
+/// @see {function} get-beslist-color
+/// @type Map
+$colors: (
+  'blue': ( // blue
+    'base': #1f99c4,
+    'light': #24b5e9,
+    'dark': #0084b2
+  ),
+  'purple': ( // purple
+    'base': #b22088,
+    'light': #c82499,
+    'dark': #9f348d
+  ),
+  'green': ( // green
+    'base': #91c34e,
+    'light': #90cb4e,
+    'dark': #73a83c
+  ),
+  'orange': ( // orange
+    'base': #f37632,
+    'light': #fa9558,
+    'dark': #e95703
+  ),
+  'grey': ( // default grey
+    'base': #ececec,
+    'light': #fafafa,
+    'dark': #e0e0e0
+  ),
+  'text': (
+    'base': #545454,
+    'light': #9a9a9a,
+    'dark': #272727
+  )
+);

@@ -1,5 +1,8 @@
 import React from 'react';
 import { useQuery, gql } from '@apollo/client';
+import { Note } from './Notes.interface';
+import NoteListContainer from './noteList/NoteList.container';
+import Notes from './Notes';
 
 const GET_NOTES = gql`
     query GetNotes($pageSize: Int!, $page: Int!) {
@@ -13,15 +16,6 @@ const GET_NOTES = gql`
         }
     }
 `;
-
-interface Note {
-    id: string;
-    source_id: string;
-    prio: number;
-    text: string;
-    has_enrichment: string;
-    date_created: string;
-}
 
 interface QueryData {
     getNotes: Note[];
@@ -39,9 +33,11 @@ const NotesContainer = () => {
     if (error) return <p>Error : {error.message}</p>;
     return (
         <>
-            {data?.getNotes.map(({ id, text }) => {
-                return <span key={id}>{text}</span>;
-            })}
+            {data?.getNotes && (
+                <Notes>
+                    <NoteListContainer notes={data?.getNotes} />
+                </Notes>
+            )}
         </>
     );
 };

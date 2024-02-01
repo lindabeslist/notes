@@ -38,7 +38,7 @@ const typeDefs = `#graphql
         source_id: String!
         prio: Int!
         text: String!
-        has_enrichment: String!
+        has_enrichment: Boolean!
         date_created: String!
     }
 
