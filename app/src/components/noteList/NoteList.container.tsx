@@ -4,14 +4,15 @@ import NoteList from './NoteList';
 import Note from './Note';
 
 interface Props {
+    handleclick: (noteId: string) => void;
     notes: NoteType[];
 }
 
-const NoteListContainer = ({ notes }: Props) => {
+const NoteListContainer = ({ handleclick, notes }: Props) => {
     return (
         <NoteList>
             {notes.map((note, index) => {
-                return <Note note={note} index={index} />;
+                return <Note handleclick={handleclick} note={note} index={index} />;
             })}
         </NoteList>
     );

@@ -24,4 +24,9 @@
   &__notification {
 
   }
+
+  &__date {
+    display: flex;
+    flex-direction: column;
+  }
 }

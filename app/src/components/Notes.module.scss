@@ -7,4 +7,8 @@
     "sidebar edit";
   grid-template-columns: 1fr 3fr;
   margin: get-spacing('m');
+
+  &__activeNote {
+    grid-area: text;
+  }
 }
