@@ -1,0 +1,26 @@
+@mixin cta-button {
+  align-items: center;
+  background-color: get-color('orange');
+  border: 0;
+  border-radius: 5px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  padding: .75rem 1rem;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: get-color('orange', 'light');
+  }
+
+  &:disabled {
+    background-color: get-color('grey');
+    color: get-color('text', 'light');
+  }
+}
+
+.saveButton {
+  @include cta-button;
+  margin:1rem auto 2rem;
+  min-width: 10rem;
+}

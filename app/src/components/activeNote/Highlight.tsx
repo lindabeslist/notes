@@ -4,30 +4,21 @@ import reactStringReplace from 'react-string-replace';
 import { HighlightedRange } from '../Notes.interface';
 interface Props {
     activeClass: string;
-    highLightedRange: HighlightedRange[];
-    saveEnrichment: (ranges: HighlightedRange[]) => void;
+    highlightedRanges: HighlightedRange[];
+    setHighlightedRanges: (ranges: HighlightedRange[]) => void;
     text: string;
 }
 
-const Highlight = ({ text, activeClass, highLightedRange, saveEnrichment }: Props) => {
-    const [highlightedRanges, setHighlightedRanges] =
-        useState<HighlightedRange[]>(highLightedRange);
-
+const Highlight = ({ text, activeClass, highlightedRanges, setHighlightedRanges }: Props) => {
     const [renderedText, setRenderedText] = useState<ReactNode[] | string>(text);
-    const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
 
     useEffect(() => {
         setRenderedText(text);
     }, [text]);
 
-    useEffect(() => {
-        setHighlightedRanges(highLightedRange);
-    }, [highLightedRange]);
-
     const handleHighlight = (className: string) => {
         const selection = window.getSelection();
         if (selection) {
-            setIsButtonDisabled(false);
             const range = selection.getRangeAt(0);
             const selectedText = selection.toString().trim();
             setHighlightedRanges([
@@ -35,11 +26,6 @@ const Highlight = ({ text, activeClass, highLightedRange, saveEnrichment }: Prop
                 { text: selectedText, start: range.startOffset, end: range.endOffset, className }
             ]);
         }
-    };
-
-    const handleSaveButtonClick = () => {
-        saveEnrichment(highlightedRanges);
-        setIsButtonDisabled(true);
     };
 
     useEffect(() => {
@@ -56,12 +42,9 @@ const Highlight = ({ text, activeClass, highLightedRange, saveEnrichment }: Prop
     }, [highlightedRanges]);
 
     return (
-        <div>
+        <>
             <div onMouseUp={() => handleHighlight(activeClass)}>{renderedText}</div>
-            <button onClick={handleSaveButtonClick} type="button" disabled={isButtonDisabled}>
-                Bewaar notitie
-            </button>
-        </div>
+        </>
     );
 };
 

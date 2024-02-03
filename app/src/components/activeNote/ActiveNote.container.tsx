@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useMutation } from '@apollo/client';
 import {
+    ActiveEnrichment,
     ActiveNote as ActiveNoteType,
     EnrichmentRequest,
     HighlightedRange
@@ -9,9 +10,9 @@ import Highlight from './Highlight';
 import { ENRICHMENT } from './ActiveNote.gql';
 import ActiveNote from './ActiveNote';
 import RichText from '../editor/Editor';
-
+import mapEnrichments from './mapActiveEnrichments';
+import SaveButton from '../saveButton/SaveButton';
 interface Props {
-    // handleclick: (noteId: string) => void;
     activeNote?: ActiveNoteType;
 }
 
@@ -21,12 +22,21 @@ interface QueryDataNote {
 
 const ActiveNoteContainer = ({ activeNote }: Props) => {
     const [activeClassName, setActiveClassName] = useState('purple');
+    const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
+
     const [enrich] = useMutation<QueryDataNote, EnrichmentRequest>(ENRICHMENT);
+    const [highlightedRanges, setHighlightedRanges] = useState<HighlightedRange[]>(
+        mapEnrichments(activeNote?.enrichments)
+    );
+
+    useEffect(() => {
+        setHighlightedRanges(mapEnrichments(activeNote?.enrichments));
+    }, [activeNote]);
 
     if (!activeNote) return null;
 
-    const handleClick = (ranges: HighlightedRange[]) => {
-        const enrichment = ranges.map((range) => {
+    const handleClick = () => {
+        const enrichment = highlightedRanges.map((range) => {
             return {
                 start_pos: range.start,
                 end_pos: range.end,
@@ -40,10 +50,16 @@ const ActiveNoteContainer = ({ activeNote }: Props) => {
                 enrichment
             }
         });
+        setIsButtonDisabled(true);
     };
 
     const setActiveClass = (activeClass: string) => {
         setActiveClassName(activeClass);
+    };
+
+    const handleSetHighlightedRanges = (highlightedRanges: HighlightedRange[]) => {
+        setHighlightedRanges(highlightedRanges);
+        setIsButtonDisabled(false);
     };
 
     const date = new Date(activeNote.date_created);
@@ -51,24 +67,16 @@ const ActiveNoteContainer = ({ activeNote }: Props) => {
         <>
             <ActiveNote noteDate={date} setActiveClass={setActiveClass}>
                 <Highlight
-                    saveEnrichment={handleClick}
+                    highlightedRanges={highlightedRanges}
+                    setHighlightedRanges={handleSetHighlightedRanges}
                     text={activeNote.text}
                     activeClass={activeClassName}
-                    highLightedRange={
-                        activeNote.enrichments
-                            ? activeNote.enrichments.map((enrichment) => ({
-                                  start: enrichment.start_pos,
-                                  end: enrichment.end_pos,
-                                  text: enrichment.entity,
-                                  className: ''
-                              }))
-                            : []
-                    }
                 />
             </ActiveNote>
             <div>
                 <RichText />
             </div>
+            <SaveButton handleClick={handleClick} isButtonDisabled={isButtonDisabled} />
         </>
     );
 };
