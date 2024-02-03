@@ -1,9 +1,18 @@
-import { ActiveNote as ActiveNoteType, EnrichmentRequest } from '../Notes.interface';
+import {
+    ActiveNote as ActiveNoteType,
+    EnrichmentRequest,
+    HighlightedRange
+} from '../Notes.interface';
 import React, { ReactElement, useEffect, useState } from 'react';
 // import ActiveNote from './ActiveNote';
 import { useQuery, gql, useLazyQuery, useMutation } from '@apollo/client';
 import ActiveNote from './ActiveNote';
 import LabelingComponent from './Highlight';
+import MarkdownRenderer from './Highlight';
+import HighlightParts from './HighlightParts';
+import HighlightWords from './HighlightWords';
+import HighlightWithClass from './HighlightWithClass';
+import Labels from '../labels/Labels';
 
 interface Props {
     // handleclick: (noteId: string) => void;
@@ -50,47 +59,55 @@ const ENRICHMENT = gql`
     }
 `;
 
-interface SelectedText {
-    text: string;
-    color: string;
-}
-
 const ActiveNoteContainer = ({ activeNote }: Props) => {
+    const [activeClassName, setActiveClassName] = useState('red');
     const [enrich, { data, loading, error }] = useMutation<QueryDataNote, EnrichmentRequest>(
         ENRICHMENT
     );
 
     if (!activeNote) return null;
 
-    const handleClick = () => {
+    const handleClick = (ranges: HighlightedRange[]) => {
+        const enrichment = ranges.map((range) => {
+            return {
+                start_pos: range.start,
+                end_pos: range.end,
+                entity: range.text,
+                description: ''
+            };
+        });
         enrich({
             variables: {
                 noteId: activeNote.id,
-                enrichment: [
-                    {
-                        start_pos: 0,
-                        end_pos: 10,
-                        entity: 'LINDA',
-                        description: 'A person'
-                    },
-                    {
-                        start_pos: 0,
-                        end_pos: 10,
-                        entity: 'PERSON',
-                        description: 'A person'
-                    }
-                ]
+                enrichment
             }
         });
+    };
+
+    const setActiveClass = (activeClass: string) => {
+        setActiveClassName(activeClass);
     };
 
     const date = new Date(activeNote.date_created);
     return (
         <>
             <span>{`${days[date.getDay()]} ${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`}</span>
-            {/*<div onClick={handleClick}>{note}</div>*/}
-            {JSON.stringify(data)}
-            <LabelingComponent NoteText={activeNote.text} />
+            <HighlightWithClass
+                saveEnrichment={handleClick}
+                text={activeNote.text}
+                activeClass={activeClassName}
+                highLightedRange={
+                    activeNote.enrichments
+                        ? activeNote.enrichments.map((enrichment) => ({
+                              start: enrichment.start_pos,
+                              end: enrichment.end_pos,
+                              text: enrichment.entity,
+                              className: ''
+                          }))
+                        : []
+                }
+            />
+            <Labels setActiveClass={setActiveClass} />
         </>
     );
 };

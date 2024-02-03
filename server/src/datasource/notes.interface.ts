@@ -27,6 +27,7 @@ export interface ActiveNote {
 export interface NotesRequest {
     page: number;
     page_size: number;
+    has_enrichment?: boolean;
 }
 
 export interface NoteRequest {

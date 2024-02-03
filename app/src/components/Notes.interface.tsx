@@ -7,6 +7,14 @@ export interface Note {
     date_created: string;
 }
 
+export interface ActiveEnrichment {
+    start_pos: number;
+    end_pos: number;
+    selected_text: string;
+    entity: string;
+    description: string;
+}
+
 export interface ActiveNote {
     id: string;
     source_id: string;
@@ -14,13 +22,7 @@ export interface ActiveNote {
     text: string;
     has_enrichment: boolean;
     date_created: string;
-    enrichments: {
-        start_pos: number;
-        end_pos: number;
-        selected_text: string;
-        entity: string;
-        description: string;
-    };
+    enrichments: ActiveEnrichment[];
 }
 
 export interface Enrichment {
@@ -33,4 +35,11 @@ export interface Enrichment {
 export interface EnrichmentRequest {
     noteId: string;
     enrichment: Enrichment[];
+}
+
+export interface HighlightedRange {
+    className: string;
+    end: number;
+    start: number;
+    text: string;
 }

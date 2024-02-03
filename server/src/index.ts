@@ -19,8 +19,13 @@ export interface ContextValue {
 }
 
 class NotesAPI extends RESTDataSource {
-    async getNotes({ page, page_size }: NotesRequest): Promise<Note[]> {
-        return this.get(`http://localhost:8080/api/v1/notes?page=${page}&page_size=${page_size}`)
+    async getNotes({ page, page_size, has_enrichment }: NotesRequest): Promise<Note[]> {
+console.log('>>>>>>>>', has_enrichment)
+        let hasEnrichment = ''
+        if (typeof has_enrichment !== "undefined") hasEnrichment = `&has_enrichment=false`;
+
+        console.log(`http://localhost:8080/api/v1/notes?page=${page}&page_size=${page_size}${hasEnrichment}`);
+        return this.get(`http://localhost:8080/api/v1/notes?page=${page}&page_size=${page_size}${hasEnrichment}`)
     }
 
     async getNote({ note_id }: NoteRequest): Promise<ActiveNote> {
@@ -68,7 +73,7 @@ const typeDefs = `#graphql
     }
 
     type Query {
-        getNotes(page: Int!, page_size: Int!): [Note]
+        getNotes(page: Int!, page_size: Int!, has_enrichment: Boolean): [Note]
         getNote(note_id: String): ActiveNote
     }
     

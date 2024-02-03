@@ -14,7 +14,7 @@ const Note = ({ handleclick, note, index }: Props) => {
 
     return (
         <div className={styles.note} onClick={() => handleclick(note.id)}>
-            <span className={styles.note__state}>{note.has_enrichment ? 'O' : 'L'}</span>
+            <span className={styles.note__state}>{note.has_enrichment ? 'L' : 'O'}</span>
             <span className={styles.note__prio}>{note.prio}</span>
             <div className={styles.note__date}>
                 <span>{`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`}</span>

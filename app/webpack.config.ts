@@ -6,7 +6,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import sassResources from './src/assets/scss/_utilities';
 
 const config: Configuration = {
-    mode: (process.env.NODE_ENV as 'production' | 'development' | undefined) ?? 'development',
+    mode: 'development',
     entry: './src/index.tsx',
     module: {
         rules: [
@@ -42,6 +42,32 @@ const config: Configuration = {
                         options: {
                             sourceMap: true,
                             resources: sassResources.map((file: any) =>
+                                // eslint-disable-next-line no-undef
+                                path.resolve(__dirname, './src/assets/scss/_utilities/', file)
+                            )
+                        }
+                    }
+                ]
+            },
+            {
+                test: /\.(scss|css)$/,
+                exclude: /\.module\.scss$/,
+                use: [
+                    { loader: MiniCssExtractPlugin.loader },
+                    { loader: 'css-loader' },
+                    { loader: 'postcss-loader' },
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            sourceMap: true
+                        }
+                    },
+                    {
+                        loader: 'sass-resources-loader',
+                        options: {
+                            sourceMap: true,
+                            resources: sassResources.map((file: any) =>
+                                // eslint-disable-next-line no-undef
                                 path.resolve(__dirname, './src/assets/scss/_utilities/', file)
                             )
                         }

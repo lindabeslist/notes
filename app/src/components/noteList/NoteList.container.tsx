@@ -12,7 +12,7 @@ const NoteListContainer = ({ handleclick, notes }: Props) => {
     return (
         <NoteList>
             {notes.map((note, index) => {
-                return <Note handleclick={handleclick} note={note} index={index} />;
+                return <Note key={note.id} handleclick={handleclick} note={note} index={index} />;
             })}
         </NoteList>
     );

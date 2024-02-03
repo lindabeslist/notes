@@ -65,10 +65,16 @@ const NotesContainer = () => {
         getActiveNote({ variables: { noteId } });
     };
 
-    const handleShowUnratedClick = (toggle: boolean) => {
-        console.log();
-        setShowUnrated(toggle);
-    };
+    // const handleShowmore = () => {
+    //     if (!data) return;
+    //     fetchMore({
+    //         variables: {
+    //             pageSize: NOTES_TO_FETCH,
+    //             page: 2,
+    //             hasEnrichment: showUnrated ? false : undefined
+    //         }
+    //     });
+    // };
 
     const handlePagination = (page: number) => {
         setPage(page);
@@ -82,7 +88,7 @@ const NotesContainer = () => {
                 <Notes
                     activeNote={activeNote?.getNote}
                     showUnrated={showUnrated}
-                    setShowUnrated={(toggle: boolean) => handleShowUnratedClick(toggle)}>
+                    setShowUnrated={(toggle: boolean) => setShowUnrated(toggle)}>
                     <NoteListContainer handleclick={handleNoteClick} notes={data?.getNotes} />
                     <Pagination page={page} setPage={(page) => handlePagination(page)} />
                 </Notes>
