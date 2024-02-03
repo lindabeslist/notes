@@ -1,32 +1,70 @@
 .note {
+  align-items: center;
+  border-bottom: 1px solid get-color('grey', 'dark');
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   overflow: hidden;
+  padding: 12px;
+
+  &--active {
+    background-color: get-color('grey');
+  }
 
   &__state {
-    border: 1px solid rgb(7, 122, 7);
     border-radius: 50%;
-    color: rgb(7, 122, 7);
+    height: 32px;
     line-height: 32px;
     text-align: center;
     width: 32px;
+
+     &--l {
+       border: 1px solid get-color('red');
+       color: get-color('red')
+     }
+
+    &--o {
+      border: 1px solid get-color('green');
+      color: get-color('green')
+    }
   }
 
   &__prio {
-    width: 32px;
-    line-height: 32px;
     border-radius: 50%;
-    text-align: center;
-    background-color: rgb(7, 122, 7);
     color: white;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    width: 32px;
+
+    &--1 {
+      background-color: get-color('red', 'dark')
+    }
+    &--2 {
+      background-color: get-color('red')
+    }
+    &--3 {
+      background-color: get-color('yellow', 'dark')
+    }
+    &--4 {
+      background-color: get-color('green')
+    }
+
+    &--5 {
+      background-color: get-color('blue')
+    }
+
   }
 
   &__notification {
-
+    font-weight: bold;
   }
 
   &__date {
     display: flex;
     flex-direction: column;
+  }
+
+  &__time {
+    font-weight: bold;
   }
 }

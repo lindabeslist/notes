@@ -1,9 +1,6 @@
-.color {
-  &--red {
-    background-color: red;
-  }
-
-  &--yellow {
-    background-color: yellow;
+.activeNote {
+  &__date{
+    color: get-color('text', 'light');
+    margin-bottom: 1rem;
   }
 }

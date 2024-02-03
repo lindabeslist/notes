@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
 const allLabels = [
-    { name: 'Persoonsgegeven', color: 'red', checked: true },
-    { name: 'Plaats', color: 'yellow', checked: false },
+    { name: 'Persoonsgegeven', color: 'purple', checked: true },
+    { name: 'Plaats', color: 'orange', checked: false },
     { name: 'voertuig', color: 'green', checked: false },
     { name: 'Signalering', color: 'blue', checked: false }
 ];
