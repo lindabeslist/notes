@@ -6,10 +6,9 @@ import {
     HighlightedRange
 } from '../Notes.interface';
 import Highlight from './Highlight';
-import LabelsContainer from '../labels/Labels.container';
-import { days, months } from './date';
 import { ENRICHMENT } from './ActiveNote.gql';
 import ActiveNote from './ActiveNote';
+import RichText from '../editor/Editor';
 
 interface Props {
     // handleclick: (noteId: string) => void;
@@ -50,7 +49,7 @@ const ActiveNoteContainer = ({ activeNote }: Props) => {
     const date = new Date(activeNote.date_created);
     return (
         <>
-            <ActiveNote noteDate={date}>
+            <ActiveNote noteDate={date} setActiveClass={setActiveClass}>
                 <Highlight
                     saveEnrichment={handleClick}
                     text={activeNote.text}
@@ -67,7 +66,9 @@ const ActiveNoteContainer = ({ activeNote }: Props) => {
                     }
                 />
             </ActiveNote>
-            <LabelsContainer setActiveClass={setActiveClass} />
+            <div>
+                <RichText />
+            </div>
         </>
     );
 };

@@ -1,6 +1,18 @@
 .activeNote {
+  background-color: get-color('grey', 'light');
+  border: 1px solid get-color('grey', 'dark');
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  margin-bottom: 2rem;
+  min-height:32vh;
+  padding: 12px;
+
   &__date{
     color: get-color('text', 'light');
     margin-bottom: 1rem;
+  }
+
+  &__labels {
+      align-self: end;
   }
 }

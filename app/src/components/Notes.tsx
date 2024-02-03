@@ -21,9 +21,6 @@ const Notes = ({ activeNote, children, setShowUnrated, showUnrated }: Props) => 
             <div className={styles.notes__activeNote}>
                 <ActiveNoteContainer activeNote={activeNote} />
             </div>
-            <div className={styles.notes__edit}>
-                <RichText />
-            </div>
             <Toggle
                 label="Toon alleen onbeoordeelde meldingen"
                 id="notes"
