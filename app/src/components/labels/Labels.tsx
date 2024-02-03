@@ -1,64 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
+import styles from './Labels.module.scss';
 
-const allLabels = [
-    { name: 'Persoonsgegeven', color: 'purple', checked: true },
-    { name: 'Plaats', color: 'orange', checked: false },
-    { name: 'voertuig', color: 'green', checked: false },
-    { name: 'Signalering', color: 'blue', checked: false }
-];
-
-interface CheckboxProps {
+interface Props {
+    color: string;
     isChecked: boolean;
     label: string;
     checkHandler: () => void;
     index: number;
 }
 
-export const Checkbox = ({ isChecked, label, checkHandler, index }: CheckboxProps) => {
+export const Labels = ({ color, isChecked, label, checkHandler, index }: Props) => {
     return (
-        <div>
+        <label className={styles.labels}>
             <input
                 type="checkbox"
                 id={`checkbox-${index}`}
                 checked={isChecked}
                 onChange={checkHandler}
             />
-            <label htmlFor={`checkbox-${index}`}>{label}</label>
-        </div>
-    );
-};
-
-interface Props {
-    setActiveClass: (activeClass: string) => void;
-}
-
-const Labels = ({ setActiveClass }: Props) => {
-    const [labels, setLabels] = useState(allLabels);
-
-    const updateCheckStatus = (index: number) => {
-        setLabels(
-            labels.map((label, currentIndex) => {
-                if (currentIndex === index) setActiveClass(label.color);
-
-                return currentIndex === index
-                    ? { ...label, checked: !label.checked }
-                    : { ...label, checked: false };
-            })
-        );
-    };
-
-    return (
-        <div className="App">
-            {labels.map((label, index) => (
-                <Checkbox
-                    key={label.name}
-                    isChecked={label.checked}
-                    checkHandler={() => updateCheckStatus(index)}
-                    label={label.name}
-                    index={index}
-                />
-            ))}
-        </div>
+            <span className={styles.labels__checkmark}></span>
+            <span className={styles[`labels--${color}`]}>{label}</span>
+        </label>
     );
 };
 

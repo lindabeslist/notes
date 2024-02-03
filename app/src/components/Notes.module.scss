@@ -1,6 +1,6 @@
 .notes {
   display: grid;
-  grid-row-gap: 20px;
+  grid-gap: 16px;
   grid-template-areas:
     "notesHeader header"
     "sidebar text"
@@ -12,8 +12,7 @@
   &__activeNote {
     align-content: space-between;
     background-color: get-color('grey', 'light');
-    border-top: 1px solid get-color('grey', 'dark');
-    border-bottom: 1px solid get-color('grey', 'dark');
+    border: 1px solid get-color('grey', 'dark');
     display: grid;
     grid-area: text;
     min-height:32vh;

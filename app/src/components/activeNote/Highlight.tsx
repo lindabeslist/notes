@@ -16,6 +16,14 @@ const Highlight = ({ text, activeClass, highLightedRange, saveEnrichment }: Prop
     const [renderedText, setRenderedText] = useState<ReactNode[] | string>(text);
     const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
 
+    useEffect(() => {
+        setRenderedText(text);
+    }, [text]);
+
+    useEffect(() => {
+        setHighlightedRanges(highLightedRange);
+    }, [highLightedRange]);
+
     const handleHighlight = (className: string) => {
         const selection = window.getSelection();
         if (selection) {

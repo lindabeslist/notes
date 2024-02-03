@@ -6,7 +6,7 @@ import {
     HighlightedRange
 } from '../Notes.interface';
 import Highlight from './Highlight';
-import Labels from '../labels/Labels';
+import LabelsContainer from '../labels/Labels.container';
 import { days, months } from './date';
 import { ENRICHMENT } from './ActiveNote.gql';
 import ActiveNote from './ActiveNote';
@@ -67,7 +67,7 @@ const ActiveNoteContainer = ({ activeNote }: Props) => {
                     }
                 />
             </ActiveNote>
-            <Labels setActiveClass={setActiveClass} />
+            <LabelsContainer setActiveClass={setActiveClass} />
         </>
     );
 };

@@ -1,11 +1,4 @@
-/// Map of the corporate beslist.nl colors.
-/// @group global
-/// @prop {Map} primary - primary color
-/// @prop {Map} secondary - secondary color
-/// @prop {Map} accent - accent color
-/// @prop {Map} cta - call to action color
-/// @see {function} get-beslist-color
-/// @type Map
+
 $colors: (
   'blue': ( // blue
     'base': #1f99c4,
