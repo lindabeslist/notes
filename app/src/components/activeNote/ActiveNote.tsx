@@ -13,7 +13,10 @@ const ActiveNote = ({ children, noteDate, setActiveClass }: Props) => {
             <div className={styles.activeNote__date}>
                 {`${days[noteDate.getDay()]} ${noteDate.getDate()} ${months[noteDate.getMonth()]} ${noteDate.getFullYear()}`}
             </div>
-            {children}
+            <div className={styles.activeNote__note}>
+                <span>{`${noteDate.getHours()}:${noteDate.getMinutes()}`}</span>
+                {children}
+            </div>
             <div className={styles.activeNote__labels}>
                 <LabelsContainer setActiveClass={setActiveClass} />
             </div>

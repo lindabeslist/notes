@@ -3,7 +3,7 @@ import styles from './Notes.module.scss';
 import NotesTitle from './notesTitle/NotesTitle';
 import { ActiveNote as ActiveNoteType } from './Notes.interface';
 import ActiveNoteContainer from './activeNote/ActiveNote.container';
-import RichText from './editor/Editor';
+import Editor from './editor/Editor';
 import Toggle from './toggle/Toggle';
 
 interface Props {

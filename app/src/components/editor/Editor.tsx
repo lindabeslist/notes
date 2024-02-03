@@ -4,19 +4,23 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import './editor.css';
 
-const RichText = () => {
-    const [value, setValue] = useState('');
+interface Props {
+    editorValue: string;
+    setEditorValue: (content: string) => void;
+}
+
+const Editor = ({ editorValue, setEditorValue }: Props) => {
     const handleEditorChange = (content: any) => {
         console.log('Content was updated:', content);
-        setValue(content);
+        setEditorValue(content);
     };
 
-    console.log(value);
+    console.log(editorValue);
     return (
         <div>
             <ReactQuill
                 theme="snow"
-                value={value}
+                value={editorValue}
                 onChange={handleEditorChange}
                 preserveWhitespace
             />
@@ -24,4 +28,4 @@ const RichText = () => {
     );
 };
 
-export default RichText;
+export default Editor;

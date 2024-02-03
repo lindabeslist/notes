@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useMutation } from '@apollo/client';
 import {
-    ActiveEnrichment,
     ActiveNote as ActiveNoteType,
     EnrichmentRequest,
     HighlightedRange
@@ -9,7 +8,7 @@ import {
 import Highlight from './Highlight';
 import { ENRICHMENT } from './ActiveNote.gql';
 import ActiveNote from './ActiveNote';
-import RichText from '../editor/Editor';
+import Editor from '../editor/Editor';
 import mapEnrichments from './mapActiveEnrichments';
 import SaveButton from '../saveButton/SaveButton';
 interface Props {
@@ -23,6 +22,7 @@ interface QueryDataNote {
 const ActiveNoteContainer = ({ activeNote }: Props) => {
     const [activeClassName, setActiveClassName] = useState('purple');
     const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
+    const [editorValue, setEditorValue] = useState('');
 
     const [enrich] = useMutation<QueryDataNote, EnrichmentRequest>(ENRICHMENT);
     const [highlightedRanges, setHighlightedRanges] = useState<HighlightedRange[]>(
@@ -31,6 +31,8 @@ const ActiveNoteContainer = ({ activeNote }: Props) => {
 
     useEffect(() => {
         setHighlightedRanges(mapEnrichments(activeNote?.enrichments));
+        setEditorValue('');
+        setIsButtonDisabled(true);
     }, [activeNote]);
 
     if (!activeNote) return null;
@@ -41,7 +43,7 @@ const ActiveNoteContainer = ({ activeNote }: Props) => {
                 start_pos: range.start,
                 end_pos: range.end,
                 entity: range.text,
-                description: ''
+                description: editorValue
             };
         });
         enrich({
@@ -62,6 +64,11 @@ const ActiveNoteContainer = ({ activeNote }: Props) => {
         setIsButtonDisabled(false);
     };
 
+    const handleSetEditorValue = (content: string) => {
+        setEditorValue(content);
+        setIsButtonDisabled(false);
+    };
+
     const date = new Date(activeNote.date_created);
     return (
         <>
@@ -74,7 +81,7 @@ const ActiveNoteContainer = ({ activeNote }: Props) => {
                 />
             </ActiveNote>
             <div>
-                <RichText />
+                <Editor editorValue={editorValue} setEditorValue={handleSetEditorValue} />
             </div>
             <SaveButton handleClick={handleClick} isButtonDisabled={isButtonDisabled} />
         </>

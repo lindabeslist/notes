@@ -15,4 +15,9 @@
   &__labels {
       align-self: end;
   }
+
+  &__note {
+    display: grid;
+    grid-template-columns: 4rem 1fr;
+  }
 }
