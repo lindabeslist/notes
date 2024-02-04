@@ -1,11 +1,6 @@
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
-// import NotesApi from "./datasource/notes-api";
-// import typeDefs from './typedefs';
-// import resolvers from "./resolvers";
-// import typeDefs from './typedefs/notes'
-import {Note, NotesRequest} from "./datasource/notes.interface";
-// import {GraphQLCustomContext, NotesResolversContext} from "./resolvers/notes";
+import {Note, ActiveNote, NoteRequest, NotesRequest, EnrichmentRequest} from "./datasource/notes.interface";
 import {RESTDataSource} from "@apollo/datasource-rest";
 
 export interface NotesDataSources {
@@ -24,26 +19,66 @@ export interface ContextValue {
 }
 
 class NotesAPI extends RESTDataSource {
-    // override baseURL = 'http://localhost:8080/api/v1/notes';
+    async getNotes({ page, page_size, has_enrichment }: NotesRequest): Promise<Note[]> {
+console.log('>>>>>>>>', has_enrichment)
+        let hasEnrichment = ''
+        if (typeof has_enrichment !== "undefined") hasEnrichment = `&has_enrichment=false`;
 
-    async getNotes({ page, page_size}: NotesRequest): Promise<Note[]> {
-        // return this.get(`page${page}&page_size=${page_size}`);
-        return this.get('http://localhost:8080/api/v1/notes?page=1&page_size=10')
+        console.log(`http://localhost:8080/api/v1/notes?page=${page}&page_size=${page_size}${hasEnrichment}`);
+        return this.get(`http://localhost:8080/api/v1/notes?page=${page}&page_size=${page_size}${hasEnrichment}`)
     }
+
+    async getNote({ note_id }: NoteRequest): Promise<ActiveNote> {
+        return this.get(`http://localhost:8080/api/v1/notes/${note_id}`)
+    }
+
+    async enrichment({ note_id, enrichment }: EnrichmentRequest): Promise<ActiveNote> {
+        return this.put(`http://localhost:8080/api/v1/notes/${note_id}/enrichment`, {body: enrichment})
+    }
+
 }
 
-const typeDefs = `#graphql
-    type Note {
+const noteTypedef = `
         id: String!
         source_id: String!
         prio: Int!
         text: String!
-        has_enrichment: String!
+        has_enrichment: Boolean!
         date_created: String!
+`
+
+const typeDefs = `#graphql
+    type Note {
+        ${noteTypedef}
+    }
+    
+    type Enrichments {
+        start_pos: Int!
+        end_pos: Int!
+        selected_text: String!
+        entity: String!
+        description: String!    
+    }
+    
+    input EnrichmentsMutation {
+        start_pos: Int!
+        end_pos: Int!
+        entity: String!
+        description: String!    
+    }
+   
+    type ActiveNote {
+        ${noteTypedef}
+        Enrichments: [Enrichments!]
     }
 
     type Query {
-        getNotes(page: Int!, page_size: Int!): [Note]
+        getNotes(page: Int!, page_size: Int!, has_enrichment: Boolean): [Note]
+        getNote(note_id: String): ActiveNote
+    }
+    
+    type Mutation {
+      enrichment(note_id: String, enrichment: [EnrichmentsMutation]): ActiveNote
     }
 `;
 
@@ -57,23 +92,35 @@ const resolvers = {
         ): Promise<Note[]> => {
             return await dataSources.notesAPI.getNotes(params);
         },
+
+        getNote: async (
+            parent: Record<string, unknown>,
+            params: NoteRequest,
+            { dataSources }: NotesResolversContext,
+        ): Promise<ActiveNote> => {
+            return await dataSources.notesAPI.getNote(params);
+        },
     },
+    Mutation: {
+        enrichment : async (
+            _, params: EnrichmentRequest, { dataSources }: NotesResolversContext) => {
+            const note = await dataSources.notesAPI.enrichment(params);
+            console.log(note);
+            return note;
+        },
+    },
+
 };
 
-// The ApolloServer constructor requires two parameters: your schema
-// definition and your set of resolvers.
 const server = new ApolloServer<ContextValue>({
     typeDefs,
     resolvers,
 });
 
-
 const { url } = await startStandaloneServer(server, {
     context: async () => {
         const { cache } = server;
         return {
-            // We create new instances of our data sources with each request,
-            // passing in our server's cache.
             dataSources: {
                 notesAPI: new NotesAPI({ cache }),
             },

@@ -1,0 +1,17 @@
+$beslist-spacing-scale: (
+    xxs2: .143rem,
+    xxs: .286rem,
+    xs: .571rem,
+    s: .857rem,
+    m: 1.143rem,
+    l: 1.714rem,
+    xl: 2.286rem,
+    xxl: 2.857rem,
+    xxl2: 3.429rem,
+    xxl3: 4rem,
+    xxl4: 5.714rem,
+);
+
+@function get-spacing($token) {
+    @return map-get($beslist-spacing-scale, $token);
+}

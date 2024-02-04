@@ -1,4 +1,4 @@
-import NotesApi from "../datasource/notes-api";
+import NotesApi from "../datasource/notes";
 import {Note, NotesRequest} from "../datasource/notes.interface";
 
 export interface GraphQLCustomContext {

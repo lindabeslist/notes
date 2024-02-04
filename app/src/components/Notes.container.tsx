@@ -1,47 +1,66 @@
-import React from 'react';
-import { useQuery, gql } from '@apollo/client';
+import React, { useState } from 'react';
+import { useQuery, useLazyQuery } from '@apollo/client';
+import { ActiveNote as ActiveNoteType, Note } from './Notes.interface';
+import NoteListContainer from './noteList/NoteList.container';
+import Notes from './Notes';
+import { GET_NOTE, GET_NOTES } from './Notes.gql';
 
-const GET_NOTES = gql`
-    query GetNotes($pageSize: Int!, $page: Int!) {
-        getNotes(page_size: $pageSize, page: $page) {
-            date_created
-            has_enrichment
-            id
-            prio
-            source_id
-            text
-        }
-    }
-`;
-
-interface Note {
-    id: string;
-    source_id: string;
-    prio: number;
-    text: string;
-    has_enrichment: string;
-    date_created: string;
-}
-
-interface QueryData {
+interface QueryDataNotes {
     getNotes: Note[];
 }
 
+interface QueryDataNote {
+    getNote: ActiveNoteType;
+}
+
+const NOTES_TO_FETCH = 10;
+
 const NotesContainer = () => {
-    const { loading, error, data } = useQuery<QueryData>(GET_NOTES, {
+    const [showUnrated, setShowUnrated] = useState<boolean>(false);
+    const [page, setPage] = useState<number>(1);
+    const [activeNoteId, setActiveNoteId] = useState<string | undefined>();
+    const { loading, error, data } = useQuery<QueryDataNotes>(GET_NOTES, {
         variables: {
-            pageSize: 10,
-            page: 1
+            pageSize: NOTES_TO_FETCH,
+            page,
+            hasEnrichment: showUnrated ? false : undefined
         }
     });
 
+    const [getActiveNote, { data: activeNote }] = useLazyQuery<QueryDataNote>(GET_NOTE);
+
+    const handleNoteClick = (noteId: string) => {
+        setActiveNoteId(noteId);
+        getActiveNote({ variables: { noteId } });
+    };
+
+    const handleShowUnratedClick = (toggle: boolean) => {
+        setPage(1);
+        setShowUnrated(toggle);
+    };
+
+    const handlePagination = (page: number) => {
+        setPage(page);
+    };
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error : {error.message}</p>;
     return (
         <>
-            {data?.getNotes.map(({ id, text }) => {
-                return <span key={id}>{text}</span>;
-            })}
+            {data?.getNotes && (
+                <Notes
+                    activeNote={activeNote?.getNote}
+                    showUnrated={showUnrated}
+                    setShowUnrated={(toggle: boolean) => handleShowUnratedClick(toggle)}>
+                    <NoteListContainer
+                        activeNoteId={activeNoteId}
+                        handleclick={handleNoteClick}
+                        notes={data?.getNotes}
+                        offset={(page - 1) * NOTES_TO_FETCH}
+                        page={page}
+                        setPage={(page) => handlePagination(page)}
+                    />
+                </Notes>
+            )}
         </>
     );
 };

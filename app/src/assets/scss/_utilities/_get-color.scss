@@ -1,0 +1,21 @@
+/// Get the color from $beslist-colors mapping
+/// @group global
+/// @param {String} $key ['primary'] - name of the type color (primary, secundary, accent, ...)
+/// @param {String} $variant ['base'] - name of the variant with in the color type (base, light, dark)
+/// @return {Hexidecimal} $color - color code in hexidecimal
+@function get-color(
+    $key: 'primary',
+    $variant: 'base'
+) {
+    $color: null;
+
+    // Get the color spectrum
+    $color-spectrum: map-get($colors, $key);
+
+    // Get the color variant
+    @if $color-spectrum {
+        $color: map-get($color-spectrum, $variant);
+    }
+
+    @return $color;
+}

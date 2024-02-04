@@ -1,0 +1,18 @@
+.notes {
+  display: grid;
+  grid-gap: 16px;
+  grid-template-areas:
+    "notesHeader header"
+    "sidebar activeNode"
+    "sidebar edit";
+  grid-template-columns: 360px auto;
+  grid-template-rows: auto auto 1fr;
+  margin: get-spacing('m');
+
+  &__activeNote {
+
+    grid-area: activeNode;
+
+  }
+
+}

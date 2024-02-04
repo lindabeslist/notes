@@ -1,0 +1,43 @@
+
+$colors: (
+  'blue': ( // blue
+    'base': #1f99c4,
+    'light': #24b5e9,
+    'dark': #0084b2
+  ),
+  'red': ( // red
+    'base': #FF0000,
+    'light': #ff5252,
+    'dark': #a70000
+  ),
+  'yellow': (
+    'base': #ffee32,
+    'light': #f2f2cb,
+    'dark':#ffd700
+  ),
+  'purple': ( // purple
+    'base': #b22088,
+    'light': #c82499,
+    'dark': #9f348d
+  ),
+  'green': ( // green
+    'base': #91c34e,
+    'light': #90cb4e,
+    'dark': #73a83c
+  ),
+  'orange': ( // orange
+    'base': #f37632,
+    'light': #fa9558,
+    'dark': #e95703
+  ),
+  'grey': ( // default grey
+    'base': #ececec,
+    'light': #fafafa,
+    'dark': #e0e0e0
+  ),
+  'text': (
+    'base': #545454,
+    'light': #9a9a9a,
+    'dark': #272727
+  )
+);

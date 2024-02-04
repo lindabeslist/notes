@@ -1,0 +1,6 @@
+.notesTitle {
+  color: get-color('text', 'light');
+  display: grid;
+  grid-area: notesHeader;
+  grid-template-columns: repeat(4, 1fr);
+}
