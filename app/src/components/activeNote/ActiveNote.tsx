@@ -1,13 +1,13 @@
 import styles from './ActiveNote.module.scss';
 import React from 'react';
 import { days, months } from './date';
-import LabelsContainer from '../labels/Labels.container';
+import LabelsContainer, { AllLabel } from '../labels/Labels.container';
 interface Props {
     children: React.ReactNode;
     noteDate: Date;
-    setActiveClass: (activeClass: string) => void;
+    setActiveLabel: (label: AllLabel) => void;
 }
-const ActiveNote = ({ children, noteDate, setActiveClass }: Props) => {
+const ActiveNote = ({ children, noteDate, setActiveLabel }: Props) => {
     return (
         <div className={styles.activeNote}>
             <div className={styles.activeNote__date}>
@@ -18,7 +18,7 @@ const ActiveNote = ({ children, noteDate, setActiveClass }: Props) => {
                 {children}
             </div>
             <div className={styles.activeNote__labels}>
-                <LabelsContainer setActiveClass={setActiveClass} />
+                <LabelsContainer setActiveLabel={setActiveLabel} />
             </div>
         </div>
     );

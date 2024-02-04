@@ -5,12 +5,14 @@ import {
     EnrichmentRequest,
     HighlightedRange
 } from '../Notes.interface';
-import Highlight from './Highlight';
+import Highlight from './highlight/Highlight';
 import { ENRICHMENT } from './ActiveNote.gql';
 import ActiveNote from './ActiveNote';
 import Editor from '../editor/Editor';
 import mapEnrichments from './mapActiveEnrichments';
 import SaveButton from '../saveButton/SaveButton';
+import { allLabels, AllLabel } from '../labels/Labels.container';
+
 interface Props {
     activeNote?: ActiveNoteType;
 }
@@ -20,7 +22,7 @@ interface QueryDataNote {
 }
 
 const ActiveNoteContainer = ({ activeNote }: Props) => {
-    const [activeClassName, setActiveClassName] = useState('purple');
+    const [activeLabel, setActiveLabel] = useState<AllLabel>(allLabels[0]);
     const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
     const [editorValue, setEditorValue] = useState('');
 
@@ -28,21 +30,20 @@ const ActiveNoteContainer = ({ activeNote }: Props) => {
     const [highlightedRanges, setHighlightedRanges] = useState<HighlightedRange[]>(
         mapEnrichments(activeNote?.enrichments)
     );
-
+    console.log(highlightedRanges);
     useEffect(() => {
         setHighlightedRanges(mapEnrichments(activeNote?.enrichments));
         setEditorValue('');
         setIsButtonDisabled(true);
     }, [activeNote]);
 
-    if (!activeNote) return null;
-
     const handleClick = () => {
+        if (!activeNote?.id) return;
         const enrichment = highlightedRanges.map((range) => {
             return {
                 start_pos: range.start,
                 end_pos: range.end,
-                entity: range.text,
+                entity: range.entity,
                 description: editorValue
             };
         });
@@ -55,8 +56,8 @@ const ActiveNoteContainer = ({ activeNote }: Props) => {
         setIsButtonDisabled(true);
     };
 
-    const setActiveClass = (activeClass: string) => {
-        setActiveClassName(activeClass);
+    const handleSetActiveLabel = (label: AllLabel) => {
+        setActiveLabel(label);
     };
 
     const handleSetHighlightedRanges = (highlightedRanges: HighlightedRange[]) => {
@@ -68,16 +69,17 @@ const ActiveNoteContainer = ({ activeNote }: Props) => {
         setEditorValue(content);
         setIsButtonDisabled(false);
     };
+    if (!activeNote) return null;
 
     const date = new Date(activeNote.date_created);
     return (
         <>
-            <ActiveNote noteDate={date} setActiveClass={setActiveClass}>
+            <ActiveNote noteDate={date} setActiveLabel={handleSetActiveLabel}>
                 <Highlight
                     highlightedRanges={highlightedRanges}
                     setHighlightedRanges={handleSetHighlightedRanges}
                     text={activeNote.text}
-                    activeClass={activeClassName}
+                    activeLabel={activeLabel}
                 />
             </ActiveNote>
             <div>

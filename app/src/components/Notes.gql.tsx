@@ -16,7 +16,7 @@ export const GET_NOTES = gql`
 export const GET_NOTE = gql`
     query GetNote($noteId: String) {
         getNote(note_id: $noteId) {
-            Enrichments {
+            enrichments {
                 start_pos
                 end_pos
                 selected_text

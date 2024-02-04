@@ -16,13 +16,13 @@ export interface ActiveEnrichment {
 }
 
 export interface ActiveNote {
-    id: string;
-    source_id: string;
-    prio: number;
-    text: string;
-    has_enrichment: boolean;
     date_created: string;
     enrichments: ActiveEnrichment[];
+    has_enrichment: boolean;
+    id: string;
+    prio: number;
+    source_id: string;
+    text: string;
 }
 
 export interface Enrichment {
@@ -41,5 +41,6 @@ export interface HighlightedRange {
     className: string;
     end: number;
     start: number;
-    text: string;
+    selected_text: string;
+    entity: string;
 }

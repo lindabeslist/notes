@@ -12,7 +12,7 @@ const SaveButton = ({ handleClick, isButtonDisabled }: Props) => {
             onClick={handleClick}
             type="button"
             disabled={isButtonDisabled}>
-            Bewaar notitie
+            Bewaar melding
         </button>
     );
 };

@@ -1,6 +1,6 @@
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
-import {Note, ActiveNote, NoteRequest, NotesRequest, EnrichmentRequest} from "./datasource/notes.interface";
+import {Note, ActiveNote, NoteRequest, NotesRequest, EnrichmentRequest} from "./notes.interface";
 import {RESTDataSource} from "@apollo/datasource-rest";
 
 export interface NotesDataSources {
@@ -20,11 +20,8 @@ export interface ContextValue {
 
 class NotesAPI extends RESTDataSource {
     async getNotes({ page, page_size, has_enrichment }: NotesRequest): Promise<Note[]> {
-console.log('>>>>>>>>', has_enrichment)
         let hasEnrichment = ''
         if (typeof has_enrichment !== "undefined") hasEnrichment = `&has_enrichment=false`;
-
-        console.log(`http://localhost:8080/api/v1/notes?page=${page}&page_size=${page_size}${hasEnrichment}`);
         return this.get(`http://localhost:8080/api/v1/notes?page=${page}&page_size=${page_size}${hasEnrichment}`)
     }
 
@@ -69,7 +66,7 @@ const typeDefs = `#graphql
    
     type ActiveNote {
         ${noteTypedef}
-        Enrichments: [Enrichments!]
+        enrichments: [Enrichments!]
     }
 
     type Query {
@@ -104,9 +101,7 @@ const resolvers = {
     Mutation: {
         enrichment : async (
             _, params: EnrichmentRequest, { dataSources }: NotesResolversContext) => {
-            const note = await dataSources.notesAPI.enrichment(params);
-            console.log(note);
-            return note;
+            return await dataSources.notesAPI.enrichment(params);
         },
     },
 
