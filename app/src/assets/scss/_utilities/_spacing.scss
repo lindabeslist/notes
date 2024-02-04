@@ -1,4 +1,4 @@
-$beslist-spacing-scale: (
+$spacing-scale: (
     xxs2: .143rem,
     xxs: .286rem,
     xs: .571rem,
@@ -13,5 +13,5 @@ $beslist-spacing-scale: (
 );
 
 @function get-spacing($token) {
-    @return map-get($beslist-spacing-scale, $token);
+    @return map-get($spacing-scale, $token);
 }

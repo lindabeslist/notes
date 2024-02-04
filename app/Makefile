@@ -5,7 +5,6 @@ info:
 	@echo ""
 	@echo "Command                              Description"
 	@echo "-------                              -----------"
-	@echo "make info                            Show the available make commands"
 	@echo "make start                           Start the Docker environment"
 	@echo "make stop                            Stop the Docker environment"
 	@echo "make status                          Show the status of the Docker environment"

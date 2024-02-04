@@ -30,7 +30,7 @@ const ActiveNoteContainer = ({ activeNote }: Props) => {
     const [highlightedRanges, setHighlightedRanges] = useState<HighlightedRange[]>(
         mapEnrichments(activeNote?.enrichments)
     );
-    console.log(highlightedRanges);
+
     useEffect(() => {
         setHighlightedRanges(mapEnrichments(activeNote?.enrichments));
         setEditorValue('');
