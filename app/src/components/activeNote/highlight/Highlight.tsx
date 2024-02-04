@@ -1,8 +1,8 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import styles from './Highlight.module.scss';
 import reactStringReplace from 'react-string-replace';
-import { HighlightedRange } from '../Notes.interface';
-import { AllLabel } from '../labels/Labels.container';
+import { HighlightedRange } from '../../Notes.interface';
+import { AllLabel } from '../../labels/Labels.container';
 interface Props {
     activeLabel: AllLabel;
     highlightedRanges: HighlightedRange[];

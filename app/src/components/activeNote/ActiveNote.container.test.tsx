@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import ActiveNoteContainer from './ActiveNote.container';
-import * as Highlight from './Highlight';
+import * as Highlight from './highlight/Highlight';
 import * as ActiveNote from './ActiveNote';
 import * as Editor from '../editor/Editor';
 import * as SaveButton from '../saveButton/SaveButton';

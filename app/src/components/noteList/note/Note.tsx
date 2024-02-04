@@ -1,5 +1,5 @@
 import React from 'react';
-import { Note as NoteType } from '../Notes.interface';
+import { Note as NoteType } from '../../Notes.interface';
 import styles from './Note.module.scss';
 
 interface Props {

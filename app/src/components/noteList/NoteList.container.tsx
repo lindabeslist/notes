@@ -1,7 +1,7 @@
 import { Note as NoteType } from '../Notes.interface';
 import React from 'react';
 import NoteList from './NoteList';
-import Note from './Note';
+import Note from './note/Note';
 import Pagination from '../pagination/Pagination';
 
 interface Props {

@@ -5,7 +5,7 @@ import {
     EnrichmentRequest,
     HighlightedRange
 } from '../Notes.interface';
-import Highlight from './Highlight';
+import Highlight from './highlight/Highlight';
 import { ENRICHMENT } from './ActiveNote.gql';
 import ActiveNote from './ActiveNote';
 import Editor from '../editor/Editor';
@@ -30,7 +30,7 @@ const ActiveNoteContainer = ({ activeNote }: Props) => {
     const [highlightedRanges, setHighlightedRanges] = useState<HighlightedRange[]>(
         mapEnrichments(activeNote?.enrichments)
     );
-
+    console.log(highlightedRanges);
     useEffect(() => {
         setHighlightedRanges(mapEnrichments(activeNote?.enrichments));
         setEditorValue('');

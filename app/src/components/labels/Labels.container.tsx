@@ -11,7 +11,7 @@ export interface AllLabel {
 export const allLabels: AllLabel[] = [
     { name: 'Persoonsgegeven', color: 'purple', checked: true, entity: 'PERSON' },
     { name: 'Plaats', color: 'orange', checked: false, entity: 'LOCATION' },
-    { name: 'voertuig', color: 'green', checked: false, entity: 'TRANSPORT' },
+    { name: 'Bedrijf', color: 'green', checked: false, entity: 'ORGANIZATION' },
     { name: 'Signalering', color: 'blue', checked: false, entity: 'SIGNAL' }
 ];
 
