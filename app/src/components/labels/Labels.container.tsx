@@ -3,16 +3,15 @@ import Labels from './Labels';
 
 export interface AllLabel {
     name: string;
-    color: string;
     checked: boolean;
     entity: string;
 }
 
 export const allLabels: AllLabel[] = [
-    { name: 'Persoonsgegeven', color: 'purple', checked: true, entity: 'PERSON' },
-    { name: 'Plaats', color: 'orange', checked: false, entity: 'LOCATION' },
-    { name: 'Bedrijf', color: 'green', checked: false, entity: 'ORGANIZATION' },
-    { name: 'Signalering', color: 'blue', checked: false, entity: 'SIGNAL' }
+    { name: 'Persoonsgegeven', checked: true, entity: 'PERSON' },
+    { name: 'Plaats', checked: false, entity: 'LOCATION' },
+    { name: 'Bedrijf', checked: false, entity: 'ORGANIZATION' },
+    { name: 'Signalering', checked: false, entity: 'SIGNAL' }
 ];
 
 interface Props {
@@ -41,7 +40,7 @@ const LabelsContainer = ({ setActiveLabel }: Props) => {
             {labels.map((label, index) => (
                 <Labels
                     key={label.name}
-                    color={label.color}
+                    entity={label.entity}
                     isChecked={label.checked}
                     checkHandler={() => updateCheckStatus(index)}
                     label={label.name}

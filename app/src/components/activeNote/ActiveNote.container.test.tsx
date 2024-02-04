@@ -10,8 +10,8 @@ import { MockedProvider } from '@apollo/client/testing';
 
 const mockHiglightedRange = {
     className: 'classname',
-    end: 10,
-    start: 1,
+    end_pos: 10,
+    start_pos: 1,
     selected_text: 'test',
     entity: 'PERSON'
 };
@@ -106,17 +106,15 @@ describe('ActiveNoteContainer', () => {
             expect.objectContaining({
                 activeLabel: {
                     checked: true,
-                    color: 'purple',
                     entity: 'PERSON',
                     name: 'Persoonsgegeven'
                 },
                 highlightedRanges: [
                     {
-                        className: '',
-                        end: 10,
+                        end_pos: 10,
                         entity: 'entity',
                         selected_text: 'test',
-                        start: 0
+                        start_pos: 0
                     }
                 ],
                 text: 'Sample Text'

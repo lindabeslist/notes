@@ -41,8 +41,8 @@ const ActiveNoteContainer = ({ activeNote }: Props) => {
         if (!activeNote?.id) return;
         const enrichment = highlightedRanges.map((range) => {
             return {
-                start_pos: range.start,
-                end_pos: range.end,
+                start_pos: range.start_pos,
+                end_pos: range.end_pos,
                 entity: range.entity,
                 description: editorValue
             };

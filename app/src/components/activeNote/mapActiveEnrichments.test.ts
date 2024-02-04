@@ -9,11 +9,10 @@ const enrichmentMock = {
 };
 
 const enrichmentRespons = {
-    start: 0,
-    end: 5,
+    start_pos: 0,
+    end_pos: 5,
     selected_text: 'example',
-    entity: 'PERSON',
-    className: 'purple'
+    entity: 'PERSON'
 };
 
 describe('mapEnrichments', () => {
@@ -28,9 +27,7 @@ describe('mapEnrichments', () => {
     it('maps enrichments correctly with no matching label', () => {
         const mappedEnrichments = mapEnrichments([{ ...enrichmentMock, entity: 'TEST' }]);
 
-        expect(mappedEnrichments).toEqual([
-            { ...enrichmentRespons, entity: 'TEST', className: '' }
-        ]);
+        expect(mappedEnrichments).toEqual([{ ...enrichmentRespons, entity: 'TEST' }]);
     });
 
     it('handles undefined enrichments', () => {

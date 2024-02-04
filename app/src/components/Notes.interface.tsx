@@ -38,9 +38,8 @@ export interface EnrichmentRequest {
 }
 
 export interface HighlightedRange {
-    className: string;
-    end: number;
-    start: number;
+    end_pos: number;
+    start_pos: number;
     selected_text: string;
     entity: string;
 }

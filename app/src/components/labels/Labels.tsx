@@ -2,14 +2,14 @@ import React from 'react';
 import styles from './Labels.module.scss';
 
 interface Props {
-    color: string;
+    entity: string;
     isChecked: boolean;
     label: string;
     checkHandler: () => void;
     index: number;
 }
 
-export const Labels = ({ color, isChecked, label, checkHandler, index }: Props) => {
+export const Labels = ({ entity, isChecked, label, checkHandler, index }: Props) => {
     return (
         <label className={styles.labels}>
             <input
@@ -19,7 +19,7 @@ export const Labels = ({ color, isChecked, label, checkHandler, index }: Props) 
                 onChange={checkHandler}
             />
             <span className={styles.labels__checkmark}></span>
-            <span className={styles[`labels--${color}`]}>{label}</span>
+            <span className={styles[`labels--${entity}`]}>{label}</span>
         </label>
     );
 };

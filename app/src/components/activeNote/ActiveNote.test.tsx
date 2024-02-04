@@ -14,7 +14,6 @@ const LabelsContainerMock = jest
             <div
                 onClick={() =>
                     setActiveLabel({
-                        color: 'purple',
                         checked: true,
                         entity: 'entity',
                         name: 'name'

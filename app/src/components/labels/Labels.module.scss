@@ -7,25 +7,25 @@
     cursor: pointer;
     user-select: none;
 
-    &--orange,
-    &--blue,
-    &--green,
-    &--purple {
+    &--PERSON,
+    &--ORGANIZATION,
+    &--SIGNAL,
+    &--LOCATION {
         border-radius: 4px;
         margin-right: 16px;
         padding: 4px;
     }
 
-    &--purple {
+    &--PERSON {
         background-color: get-color('purple');
     }
-    &--green {
+    &--ORGANIZATION {
         background-color: get-color('green');
     }
-    &--blue {
+    &--SIGNAL {
         background-color: get-color('blue');
     }
-    &--orange {
+    &--LOCATION {
         background-color: get-color('orange');
     }
 
