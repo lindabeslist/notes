@@ -20,11 +20,8 @@ export interface ContextValue {
 
 class NotesAPI extends RESTDataSource {
     async getNotes({ page, page_size, has_enrichment }: NotesRequest): Promise<Note[]> {
-console.log('>>>>>>>>', has_enrichment)
         let hasEnrichment = ''
         if (typeof has_enrichment !== "undefined") hasEnrichment = `&has_enrichment=false`;
-
-        console.log(`http://localhost:8080/api/v1/notes?page=${page}&page_size=${page_size}${hasEnrichment}`);
         return this.get(`http://localhost:8080/api/v1/notes?page=${page}&page_size=${page_size}${hasEnrichment}`)
     }
 
@@ -69,7 +66,7 @@ const typeDefs = `#graphql
    
     type ActiveNote {
         ${noteTypedef}
-        Enrichments: [Enrichments!]
+        enrichments: [Enrichments!]
     }
 
     type Query {

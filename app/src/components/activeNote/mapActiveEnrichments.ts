@@ -6,7 +6,8 @@ const mapEnrichments = (enrichments: ActiveEnrichment[] | undefined) => {
     return enrichments.map((enrichment) => ({
         start: enrichment.start_pos,
         end: enrichment.end_pos,
-        text: enrichment.entity,
+        selected_text: enrichment.selected_text,
+        entity: enrichment.entity,
         className: ''
     }));
 };

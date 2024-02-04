@@ -1,9 +1,9 @@
 {
-  "name": "vanilla-react18-typescript-webpack",
+  "name": "notes",
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "dev": "webpack serve",
+    "dev": "webpack serve --port 8081",
     "build": "webpack",
     "lint": "eslint .",
     "lint:fix": "eslint --fix",

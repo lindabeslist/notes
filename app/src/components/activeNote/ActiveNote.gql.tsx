@@ -9,7 +9,7 @@ export const ENRICHMENT = gql`
             text
             has_enrichment
             date_created
-            Enrichments {
+            enrichments {
                 start_pos
                 end_pos
                 selected_text
