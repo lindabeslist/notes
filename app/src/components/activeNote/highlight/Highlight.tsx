@@ -36,9 +36,9 @@ const Highlight = ({ text, activeLabel, highlightedRanges, setHighlightedRanges 
 
     useEffect(() => {
         let replaceText: ReactNode[] | string = renderedText;
-        highlightedRanges.forEach(function (range, index) {
+        highlightedRanges.forEach(function (range) {
             replaceText = reactStringReplace(replaceText, range.selected_text, (match, i) => (
-                <span key={index} className={styles[range.entity]}>
+                <span key={match + i} className={styles[range.entity]}>
                     {match}
                 </span>
             ));
